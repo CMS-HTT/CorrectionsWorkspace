@@ -112,16 +112,16 @@ Corrections from other sources are also added to the workspace:
 ### Electron/Muon tag and probe efficiencies from the DESY group
 The [LeptonEfficiencies](https://github.com/CMS-HTT/LeptonEfficiencies) repository is a git submodule located in `inputs/LeptonEfficiencies`. The `makeCorrectionsWorkspace.py` script will first convert the TGraphAsymmErrors objects containing the efficiencies into TH2Ds binned in pT and eta before wrapping these in RooFit functions. The table below lists the available function names:
 
-|           Function name           |                    Created from input                    |
-|-----------------------------------|----------------------------------------------------------|
-| m_idiso0p15_desy_[mc,data,ratio]  | Muon/Run2016BCD/Muon_IdIso0p15_eff.root                  |
-| m_idiso0p20_desy_[mc,data,ratio]  | Muon/Run2016BCD/Muon_IdIso0p20_eff.root                  |
-| m_idiso0p20_desy_data             | Muon/Run2016BCD/Muon_IdIso0p20_eff.root                  |
-| m_trgIsoMu22_desy_data            | Muon/Run2016BCD/Muon_IsoMu22_eff.root                    |
-| m_trgIsoMu22orTkIsoMu22_desy_data | Muon/Run2016BCD/Muon_IsoMu22_OR_TkIsoMu22_eff.root       |
-| e_idiso0p10_desy_[mc,data,ratio]  | Electron/Run2016BCD/Electron_IdIso0p10_eff.root          |
-| e_idiso0p15_desy_[mc,data,ratio]  | Electron/Run2016BCD/Electron_IdIso0p15_eff.root          |
-| e_trgEle25eta2p1WPTight_desy_data | Electron/Run2016BCD/Electron_Ele25eta2p1WPTight_eff.root |
+|           Function name           | Input variables |                    Created from input                    |
+|-----------------------------------|-----------------|----------------------------------------------------------|
+| m_idiso0p15_desy_[mc,data,ratio]  | m_pt,m_eta      | Muon/Run2016BCD/Muon_IdIso0p15_eff.root                  |
+| m_idiso0p20_desy_[mc,data,ratio]  | m_pt,m_eta      | Muon/Run2016BCD/Muon_IdIso0p20_eff.root                  |
+| m_idiso0p20_desy_data             | m_pt,m_eta      | Muon/Run2016BCD/Muon_IdIso0p20_eff.root                  |
+| m_trgIsoMu22_desy_data            | m_pt,m_eta      | Muon/Run2016BCD/Muon_IsoMu22_eff.root                    |
+| m_trgIsoMu22orTkIsoMu22_desy_data | m_pt,m_eta      | Muon/Run2016BCD/Muon_IsoMu22_OR_TkIsoMu22_eff.root       |
+| e_idiso0p10_desy_[mc,data,ratio]  | e_pt,e_eta      | Electron/Run2016BCD/Electron_IdIso0p10_eff.root          |
+| e_idiso0p15_desy_[mc,data,ratio]  | e_pt,e_eta      | Electron/Run2016BCD/Electron_IdIso0p15_eff.root          |
+| e_trgEle25eta2p1WPTight_desy_data | e_pt,e_eta      | Electron/Run2016BCD/Electron_Ele25eta2p1WPTight_eff.root |
 
 ### Muon POG tracking efficiency scale factor
 
