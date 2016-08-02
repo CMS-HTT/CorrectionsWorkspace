@@ -1,0 +1,6 @@
+[submodule "inputs/LeptonEfficiencies"]
+	path = inputs/LeptonEfficiencies
+	url = https://github.com/CMS-HTT/LeptonEfficiencies.git
+[submodule "inputs/triggerSF"]
+	path = inputs/triggerSF
+	url = https://github.com/rmanzoni/triggerSF.git
