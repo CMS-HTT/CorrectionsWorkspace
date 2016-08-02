@@ -140,3 +140,7 @@ The [triggerSF](https://github.com/rmanzoni/triggerSF) repository is a git submo
 
 will be produced. This step does incur a few seconds delay, though this should only happen the first time a workspace is opened. If a dictionary for the class is already known to ROOT then this step will be skipped automatically.
 
+**NB**: It appears in some older versions of CMSSW (e.g. `7_1_5`), the RooFit headers are not included in the default ROOT search path. If you have problems with the CrystalBallEfficiency class not compiling automatically then do this before accessing the workspace:
+
+    gSystem->AddIncludePath("-I$ROOFITSYS/include") 
+
