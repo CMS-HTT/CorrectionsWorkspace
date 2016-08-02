@@ -73,7 +73,8 @@ double muon_iso_scalefactor = w->function("m_iso_ratio")->getVal();
 double muon_trg_efficiency = w->function("m_trg_data")->getVal();
 
 // Alternatively (and slightly faster):
-// Create a RooFit function object taking the m_pt and m_eta values as arguments
+// Create a RooFit function object taking the m_pt, m_eta and m_iso values as arguments
+#include "RooFunctor.h"
 RooFunctor* m_trg_data_func = w->function("m_trg_binned_data")->functor(w->argSet("m_pt,m_eta,m_iso"))
 // In the event loop need to pass an array of the argument:
 auto args = std::vector<double>{muon.pt(), muon.eta(), muon.pf04Iso()};
@@ -83,6 +84,7 @@ double muon_trg_eff = m_trg_data_func->eval(args.data());
 **Python:**
 ```py
 import ROOT
+from array import array
 
 f = ROOT.TFile("scalefactors_2016_v1.root")
 w = f.Get("w")
@@ -96,7 +98,7 @@ muon_iso_scalefactor = w.function("m_iso_ratio").getVal()
 muon_trg_efficiency = w.function("m_trg_data").getVal()
 
 # Alternatively (and slightly faster):
-# Create a RooFit function object taking the m_pt and m_eta values as arguments
+# Create a RooFit function object taking the m_pt, m_eta and m_iso values as arguments
 m_trg_data_func = w.function("m_trg_binned_data").functor(ROOT.RooArgList(w.argSet("m_pt,m_eta,m_iso")))
 # In the event loop need to pass an array of the argument:
 muon_trg_eff = m_trg_data_func.eval(array('d', [muon.pt(), muon.eta(), muon.pf04Iso()]))
