@@ -1,4 +1,4 @@
-# Data/MC lepton scale factors
+# Correction factors
 
 ## Producing the workspace
 Clone this repository and initialise the other repositories which are handled as git submodules:
@@ -129,7 +129,7 @@ The eta-dependent scale factor histogram from [here](https://twiki.cern.ch/twiki
 
 The [triggerSF](https://github.com/rmanzoni/triggerSF) repository is a git submodule located in `inputs/triggerSF`. The efficiencies are given as functions of tau pT using a convolution of a CrystalBall resolution and a step function. Since such a function does not exist natively in ROOT, the function provided [here](https://github.com/rmanzoni/triggertools/blob/master/objects/FitFunctions.py#L120) has been converted into a RooFit function class and saved in this repository (`CrystalBallEfficiency.h` and `CrystalBallEfficiency.cxx`). The `makeCorrectionsWorkspace.py` script will build a CrystalBallEfficiency object for each parameter set in the `real_taus_cumulative.json` and `same_sign_cumulative.json` input files. The function objects are named like `t_trg[WP_LABEL]_data` and `t_trg[WP_LABEL]SS_data` respectively.
 
-**IMPORTANT: If desired you can add the code for the CrystalBallEfficiency class to your framework and compile a ROOT dictionary from it. However this is not required for reading from the workspace as RooFit has a mechanism to embed the class code in the workspace itself and generate the dictionary on the fly. When the workspace is first opened a message like
+**IMPORTANT**: If desired you can add the code for the CrystalBallEfficiency class to your framework and compile a ROOT dictionary from it. However this is not required for reading from the workspace as RooFit has a mechanism to embed the class code in the workspace itself and generate the dictionary on the fly. When the workspace is first opened a message like
 
     [#1] INFO:ObjectHandling -- RooWorkspace::CodeRepo::compileClasses() creating code export directory .wscode.963a5b90-58a3-31e6-9717-bfb44a46514d.w to extract coded embedded in workspace
     [#1] INFO:ObjectHandling -- RooWorkspace::CodeRepo::compileClasses() Extracting declaration code of class CrystalBallEfficiency, file .wscode.963a5b90-58a3-31e6-9717-bfb44a46514d.w/CrystalBallEfficiency.h
