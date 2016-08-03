@@ -59,7 +59,7 @@ Additional isolation and trigger efficiencies have been measured with isolation 
 
 ### Electrons
 
- **Note that all electron measurements have been made using the electron supercluster eta instead of the electron eta directly - you should use this as the `e_eta` input**
+ **Note that all electron measurements have been made using the electron supercluster eta - you should use this as the `e_eta` input**
 
  - `e_id_data` and `e_id_mc`: *double Voigtian* signal pdf, *RooCMSShape* background pdf
     * Probe denominator: all electrons `slimmedElectrons` collection, `pt > 10` and `abs(eta) < 2.5`
