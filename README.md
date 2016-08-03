@@ -123,9 +123,9 @@ The [LeptonEfficiencies](https://github.com/CMS-HTT/LeptonEfficiencies) reposito
 | e_idiso0p15_desy_[mc,data,ratio]  | e_pt,e_eta      | Electron/Run2016BCD/Electron_IdIso0p15_eff.root          |
 | e_trgEle25eta2p1WPTight_desy_data | e_pt,e_eta      | Electron/Run2016BCD/Electron_Ele25eta2p1WPTight_eff.root |
 
-### Muon POG tracking efficiency scale factor
+### Muon and EGamma POG tracking efficiency scale factors
 
-The eta-dependent scale factor histogram from [here](https://twiki.cern.ch/twiki/bin/view/CMS/MuonReferenceEffsRun2#Tracking_efficiency_provided_by) has been added as the function `m_trk_ratio`.
+The eta-dependent scale factor histogram from [here](https://twiki.cern.ch/twiki/bin/view/CMS/MuonReferenceEffsRun2#Tracking_efficiency_provided_by) has been added as the function `m_trk_ratio`. Similarly the pt and eta-dependent scale factors from [here](https://twiki.cern.ch/twiki/bin/viewauth/CMS/EgammaIDRecipesRun2#Electron_efficiencies_and_scale) has been added as the function `e_trk_ratio`.
 
 ### Tau trigger turn-on curves
 
