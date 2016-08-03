@@ -13,7 +13,7 @@ The workspace is produced my running the following script:
 
 The contents of the output can be inspected with:
 
-    root -l htt_scalefactors_v2.root
+    root -l htt_scalefactors_v3.root
     w->Print()
     # See more detail on the evaluation of a particular object:
     w->function("m_id_ratio")->Print("tree")
@@ -22,37 +22,77 @@ The contents of the output can be inspected with:
 
 Each name here corresponds to a RooFit function object in the workspace. See below for usage.
 
+### Muons
+
  - `m_id_data` and `m_id_mc`: *double Voigtian* signal pdf, *RooCMSShape* background pdf
     * Probe denominator: tracker muons in `slimmedMuons` collection, `pt > 20` and `abs(eta) < 2.4`
     * Probe numerator: Passes medium Muon HIP-safe ID and `d_xy < 0.045` and `d_z < 0.2`
-    * pt x abs(eta) bins: [20., 25., 30., 40., 50., 60., 80., 100., 200.] x [0, 0.9, 1.2, 2.1, 2.4]
+    * pt x abs(eta) bins: [20., 25., 30., 40., 50., 60., 80., 100., 200., 1000.] x [0, 0.9, 1.2, 2.1, 2.4]
     * Data/MC ratio available as `m_id_ratio`
     * Workspace variables to set: `m_pt` and `m_eta`
 
  - `m_iso_data` and `m_iso_mc`: *double Voigtian* signal pdf, *Exponential* background pdf
     * Probe denominator: numerator of the ID measurement above
     * Probe numerator: Passes `I_rel < 0.15`, where `I_rel` is the delta-beta corrected PF isolation with cone size 0.4
-    * pt x abs(eta) bins: [20., 25., 30., 40., 50., 60., 80., 100., 200.] x [0, 0.9, 1.2, 2.1, 2.4]
+    * pt x abs(eta) bins: [20., 25., 30., 40., 50., 60., 80., 100., 200., 1000.] x [0, 0.9, 1.2, 2.1, 2.4]
     * Data/MC ratio available as `m_iso_ratio`
     * Workspace variables to set: `m_pt` and `m_eta`
 
- - `m_trg_data`: *double Voigtian* signal pdf, *Exponential* background pdf
+ - For convenience, product of ID and iso factors available as `m_idiso_[data,mc,ratio]`
+
+ - `m_trg_data` and `m_trgOR_data`: *double Voigtian* signal pdf, *Exponential* background pdf
     * Probe denominator: numerator of the Iso measurement above
-    * Probe numerator: Fires the `HLT_IsoMu22` path and matches the final HLT filter object within `DR < 0.5`
-    * pt x abs(eta) bins: [20., 21., 22., 23., 24., 25., 30., 40., 50., 60., 80., 100., 200.] x [0, 0.9, 1.2, 2.1, 2.4]
-    * Data/MC ratio available as `m_iso_ratio`
+    * Probe numerator: For `m_trg_data`: fires the `HLT_IsoMu22` path and matches the final HLT filter object within `DR < 0.5`. For `m_trgOR_data` use the OR of the `HLT_IsoMu22` and `HLT_IsoTkMu22` paths
+    * pt x abs(eta) bins: [20., 21., 22., 23., 24., 25., 30., 40., 50., 60., 80., 100., 200., 1000.] x [0, 0.9, 1.2, 2.1, 2.4]
     * Workspace variables to set: `m_pt` and `m_eta`
 
 Additional isolation and trigger efficiencies have been measured with isolation definitions in the numerator and denominator probe selections respectively: `I_rel = [0.15, 0.25]` and `I_rel = [0.25, 0.50]`. These are available via the following functions:
 
  - `m_iso_binned_data` and `m_iso_binned_mc`: *double Voigtian* signal pdf, *Exponential* background pdf
-    * pt x abs(eta) bins: [20., 25., 30., 40., 50., 60., 80., 100., 200.] x [0, 0.9, 1.2, 2.1, 2.4]
+    * pt x abs(eta) bins: [20., 25., 30., 40., 50., 60., 80., 100., 200., 1000.] x [0, 0.9, 1.2, 2.1, 2.4]
     * Data/MC ratio available as `m_iso_binned_ratio`
     * Workspace variables to set: `m_pt`, `m_eta` and `m_iso`
 
- - `m_trg_binned_data`: *double Voigtian* signal pdf, *Exponential* background pdf
-    * pt x abs(eta) bins: [20., 21., 22., 23., 24., 25., 30., 40., 50., 60., 80., 100., 200.] x [0, 0.9, 1.2, 2.1, 2.4] for the nominal isolation, and [20., 21., 22., 23., 24., 25., 30., 40., 50., 60., 80., 100., 200.] x [0, 2.4] for the additional isolation bins due to the lower number of events.
+ - `m_trg_binned_data` and `m_trgOR_binned_data`: *double Voigtian* signal pdf, *Exponential* background pdf
+    * pt x abs(eta) bins: [20., 21., 22., 23., 24., 25., 30., 40., 50., 60., 80., 100., 200., 1000.] x [0, 0.9, 1.2, 2.1, 2.4] for the nominal isolation, and [20., 21., 22., 23., 24., 25., 30., 40., 50., 60., 80., 100., 1000.] x [0, 2.4] for the additional isolation bins due to the lower number of events.
     * Workspace variables to set: `m_pt`, `m_eta` and `m_iso`
+
+### Electrons
+
+ **Note that all electron measurements have been made using the electron supercluster eta instead of the electron eta directly - you should use this as the `e_eta` input**
+
+ - `e_id_data` and `e_id_mc`: *double Voigtian* signal pdf, *RooCMSShape* background pdf
+    * Probe denominator: all electrons `slimmedElectrons` collection, `pt > 10` and `abs(eta) < 2.5`
+    * Probe numerator: Passes MVA non-triggering ID and `d_xy < 0.045` and `d_z < 0.2`
+    * pt x abs(eta) bins: [10., 20., 25., 30., 40., 50., 100., 200., 1000.] x [0, 1.0, 1.4442, 1.56, 2.1, 2.5]
+    * Data/MC ratio available as `e_id_ratio`
+    * Workspace variables to set: `e_pt` and `e_eta`
+
+ - `e_iso_data` and `e_iso_mc`: *double Voigtian* signal pdf, *Exponential* background pdf
+    * Probe denominator: numerator of the ID measurement above
+    * Probe numerator: Passes `I_rel < 0.10`, where `I_rel` is the delta-beta corrected PF isolation with cone size 0.3
+    * pt x abs(eta) bins: [10., 20., 25., 30., 40., 50., 100., 200., 1000.] x [0, 1.0, 1.4442, 1.56, 2.1, 2.5]
+    * Data/MC ratio available as `e_iso_ratio`
+    * Workspace variables to set: `e_pt` and `e_eta`
+
+ - For convenience, product of ID and iso factors available as `e_idiso_[data,mc,ratio]`
+
+ - `e_trg_data`: *double Voigtian* signal pdf, *Exponential* background pdf
+    * Probe denominator: numerator of the Iso measurement above
+    * Probe numerator: Fires the `HLT_Ele25_eta2p1_WPTight_Gsf` path and matches the final HLT filter object within `DR < 0.5`.
+    * pt x abs(eta) bins: [10., 20., 22., 24., 26., 28., 30., 40., 50., 100., 200., 1000.] x [0, 1.0, 1.4442, 1.56, 2.1, 2.5]
+    * Workspace variables to set: `e_pt` and `e_eta`
+
+Additional isolation and trigger efficiencies have been measured with isolation definitions in the numerator and denominator probe selections respectively: `I_rel = [0.10, 0.20]` and `I_rel = [0.20, 0.50]`. These are available via the following functions:
+
+ - `e_iso_binned_data` and `e_iso_binned_mc`: *double Voigtian* signal pdf, *Exponential* background pdf
+    * pt x abs(eta) bins: [10., 20., 25., 30., 40., 50., 100., 200., 1000.] x [0, 1.0, 1.4442, 1.56, 2.1, 2.5]
+    * Data/MC ratio available as `e_iso_binned_ratio`
+    * Workspace variables to set: `e_pt`, `e_eta` and `e_iso`
+
+ - `e_trg_binned_data`: *double Voigtian* signal pdf, *Exponential* background pdf
+    * pt x abs(eta) bins: [10., 20., 22., 24., 26., 28., 30., 40., 50., 100., 200., 1000.] x [0, 1.0, 1.4442, 1.56, 2.1, 2.5] for the nominal isolation, and [10., 20., 22., 24., 26., 28., 30., 40., 50., 100. 1000.] x [0, 2.5] for the additional isolation bins due to the lower number of events.
+    * Workspace variables to set: `e_pt`, `e_eta` and `e_iso`
 
 ## Usage
 The data and MC efficiencies calculated in the fits are currently stored in TH2D histograms. To minimize the amount of extra work needed to extract these numbers, the TH2Ds have been wrapped in RooFit objects and stored inside a workspace, named `scalefactors_2016_vX.root`. Example usage in C++ and python below:
@@ -61,7 +101,7 @@ The data and MC efficiencies calculated in the fits are currently stored in TH2D
 ```cpp
 #include "RooWorkspace.h"
 
-TFile f("scalefactors_2016_v1.root");
+TFile f("scalefactors_2016_v3.root");
 RooWorkspace *w = (RooWorkspace*)f.Get("w");
 f.Close();
 
@@ -142,5 +182,5 @@ will be produced. This step does incur a few seconds delay, though this should o
 
 **NB**: It appears in some older versions of CMSSW (e.g. `7_1_5`), the RooFit headers are not included in the default ROOT search path. If you have problems with the CrystalBallEfficiency class not compiling automatically then do this before accessing the workspace:
 
-    gSystem->AddIncludePath("-I$ROOFITSYS/include") 
+    gSystem->AddIncludePath("-I$ROOFITSYS/include")
 
