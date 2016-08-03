@@ -61,6 +61,11 @@ loc = 'inputs/MuonPOG'
 muon_trk_eff_hist = wsptools.TGraphAsymmErrorsToTH1D(GetFromTFile(loc+'/ratios.root:ratio_eta'))
 wsptools.SafeWrapHist(w, ['m_eta'], muon_trk_eff_hist, name='m_trk_ratio')
 
+### Electron tracking efficiency scale factor from the egamma POG
+loc = 'inputs/EGammaPOG'
+
+electron_trk_eff_hist = GetFromTFile(loc+'/egammaEffi.txt_SF2D.root:EGamma_SF2D')
+wsptools.SafeWrapHist(w, ['e_eta','e_pt'], electron_trk_eff_hist, name='e_trk_ratio')
 
 ### DESY electron/muon tag and probe results
 loc = 'inputs/LeptonEfficiencies'
@@ -119,5 +124,5 @@ with open(loc+'/same_sign_cumulative.json') as jsonfile:
 w.importClassCode('CrystalBallEfficiency')
 
 w.Print()
-w.writeToFile('htt_scalefactors_v2.root')
+w.writeToFile('htt_scalefactors_v3.root')
 w.Delete()
