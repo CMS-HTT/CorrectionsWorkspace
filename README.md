@@ -1,7 +1,7 @@
 # Correction factors
 
-UPDATES:
- - 10/09, htt_scalefactors_v4.root: added tau ID scale factors binned in decay mode - for use in the MSSM HTT analysis. See details [below](#Taus).
+**UPDATES**:
+ - 10/09, htt_scalefactors_v4.root: added tau ID scale factors binned in decay mode - for use in the MSSM HTT analysis. See details [below](#taus).
 
 ## Producing the workspace
 Clone this repository and initialise the other repositories which are handled as git submodules:
