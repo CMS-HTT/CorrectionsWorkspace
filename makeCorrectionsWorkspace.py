@@ -140,6 +140,26 @@ for task in desyHistsToWrap:
 for t in ['idiso0p10_desy', 'idiso0p15_desy']:
     w.factory('expr::e_%s_ratio("@0/@1", e_%s_data, e_%s_mc)' % (t, t, t))
 
+### KIT tau ID scale factors
+loc = 'inputs/KIT/tau_id_sfs_2016.root:'
+histsToWrap = [
+    (loc + 'mva_m_dm0_pt30', 't_iso_mva_m_dm0_pt30_sf'),
+    (loc + 'mva_m_dm1_pt30', 't_iso_mva_m_dm1_pt30_sf'),
+    (loc + 'mva_m_dm10_pt30', 't_iso_mva_m_dm10_pt30_sf'),
+    (loc + 'mva_t_dm0_pt40_eta2p1', 't_iso_mva_t_dm0_pt40_eta2p1_sf'),
+    (loc + 'mva_t_dm1_pt40_eta2p1', 't_iso_mva_t_dm1_pt40_eta2p1_sf'),
+    (loc + 'mva_t_dm10_pt40_eta2p1', 't_iso_mva_t_dm10_pt40_eta2p1_sf'),
+]
+for task in histsToWrap:
+    wsptools.SafeWrapHist(w, ['t_pt', 'expr::t_abs_eta("TMath::Abs(@0)",t_eta[0])'],
+                          GetFromTFile(task[0]), name=task[1])
+
+wsptools.MakeBinnedCategoryFuncMap(w, 't_dm', [-0.5, 0.5, 9.5, 10.5],
+                                   't_iso_mva_m_pt30_sf', ['t_iso_mva_m_dm0_pt30_sf', 't_iso_mva_m_dm1_pt30_sf', 't_iso_mva_m_dm10_pt30_sf'])
+
+wsptools.MakeBinnedCategoryFuncMap(w, 't_dm', [-0.5, 0.5, 9.5, 10.5],
+                                   't_iso_mva_t_pt40_eta2p1_sf', ['t_iso_mva_t_dm0_pt40_eta2p1_sf', 't_iso_mva_t_dm1_pt40_eta2p1_sf', 't_iso_mva_t_dm10_pt40_eta2p1_sf'])
+
 
 ### Hadronic tau trigger efficiencies
 loc = 'inputs/triggerSF/di-tau'
@@ -164,5 +184,5 @@ with open(loc+'/same_sign_cumulative.json') as jsonfile:
 w.importClassCode('CrystalBallEfficiency')
 
 w.Print()
-w.writeToFile('htt_scalefactors_v3.root')
+w.writeToFile('htt_scalefactors_v4.root')
 w.Delete()

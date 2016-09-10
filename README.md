@@ -1,5 +1,8 @@
 # Correction factors
 
+UPDATES:
+ - 10/09, htt_scalefactors_v4.root: added tau ID scale factors binned in decay mode - for use in the MSSM HTT analysis. See details [below](#Taus).
+
 ## Producing the workspace
 Clone this repository and initialise the other repositories which are handled as git submodules:
 
@@ -13,7 +16,7 @@ The workspace is produced my running the following script:
 
 The contents of the output can be inspected with:
 
-    root -l htt_scalefactors_v3.root
+    root -l htt_scalefactors_v4.root
     w->Print()
     # See more detail on the evaluation of a particular object:
     w->function("m_id_ratio")->Print("tree")
@@ -94,6 +97,12 @@ Additional isolation and trigger efficiencies have been measured with isolation 
     * pt x abs(eta) bins: [10., 20., 22., 24., 26., 28., 30., 40., 50., 100., 200., 1000.] x [0, 1.0, 1.4442, 1.56, 2.1, 2.5] for the nominal isolation, and [10., 20., 22., 24., 26., 28., 30., 40., 50., 100. 1000.] x [0, 2.5] for the additional isolation bins due to the lower number of events.
     * Workspace variables to set: `e_pt`, `e_eta` and `e_iso`
 
+### Taus
+Scale factors are defined as a function of `t_pt`, `t_eta`, and `t_dm` (the integer decay mode of the tau). Currently measurements are made inclusively in pT and eta for each decay mode. However, a minimum pT cut is applied to mirror the offline selection used in the HTT analyses. The following functions are available:
+
+ - `t_iso_mva_m_pt30_sf`: medium MVA isolation working point, tau pT > 30 GeV and abs(eta) < 2.3. Intended for use in the e-tau and mu-tau channels of the MSSM analysis. Workspace variables to set: `t_pt`, `t_eta`, and `t_dm`.
+ - `t_iso_mva_t_pt40_eta2p1_sf`: tight MVA isolation working point, tau pT > 40 GeV and abs(eta) < 2.1. Intended for use in the tau-tau channel of the MSSM analysis. Workspace variables to set: `t_pt`, `t_eta`, and `t_dm`.
+
 ## Usage
 The data and MC efficiencies calculated in the fits are currently stored in TH2D histograms. To minimize the amount of extra work needed to extract these numbers, the TH2Ds have been wrapped in RooFit objects and stored inside a workspace, named `scalefactors_2016_vX.root`. Example usage in C++ and python below:
 
@@ -101,7 +110,7 @@ The data and MC efficiencies calculated in the fits are currently stored in TH2D
 ```cpp
 #include "RooWorkspace.h"
 
-TFile f("scalefactors_2016_v3.root");
+TFile f("scalefactors_2016_v4.root");
 RooWorkspace *w = (RooWorkspace*)f.Get("w");
 f.Close();
 
@@ -126,7 +135,7 @@ double muon_trg_eff = m_trg_data_func->eval(args.data());
 import ROOT
 from array import array
 
-f = ROOT.TFile("scalefactors_2016_v1.root")
+f = ROOT.TFile("scalefactors_2016_v4.root")
 w = f.Get("w")
 f.Close()
 
