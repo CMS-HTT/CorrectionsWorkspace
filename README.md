@@ -7,6 +7,7 @@
    * The muon ID efficiencies are now measured using the generalTracks collection as probes, to be in-line with what is done by the MuonPOG. However the efficiencies for pT < 20 GeV are still made with the tracker muons as probes, as the purity in the fail region is not high enough to use the tracks. These low pT scale factors may therefore be updated in the future.
    * Added muon trigger efficiencies for the `HLT_IsoMu19_eta2p1_LooseIsoPFTau20` and `HLT_IsoMu19_eta2p1_LooseIsoPFTau20_SingleL1` cross triggers. For the former, another object in the event is required to have fired the tau part of the L1 seed as part of the denominator selection.
    * Added trigger efficiencies for the e-mu cross triggers measured by the DESY group.
+   * Added updated LO DYJetsToLL Z pT vs mass weights
 
 ## Producing the workspace
 Clone this repository and initialise the other repositories which are handled as git submodules:
@@ -208,3 +209,6 @@ will be produced. This step does incur a few seconds delay, though this should o
 
     gSystem->AddIncludePath("-I$ROOFITSYS/include")
 
+### Z pT weights
+
+Available via the function `zpt_weight` which takes the generator Z boson mass `z_gen_mass` and pT `z_gen_pt` as input.

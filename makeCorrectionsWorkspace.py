@@ -187,6 +187,9 @@ with open(loc+'/same_sign_cumulative.json') as jsonfile:
                 wp, x['m_{0}'], x['sigma'], x['alpha'], x['n'], x['norm']
             ))
 
+### LO DYJetsToLL Z mass vs pT correction
+wsptools.SafeWrapHist(w, ['z_gen_mass', 'z_gen_pt'],
+                      GetFromTFile('inputs/zpt_weights_2016.root:zptmass_histo'), name='zpt_weight')
 
 w.importClassCode('CrystalBallEfficiency')
 
