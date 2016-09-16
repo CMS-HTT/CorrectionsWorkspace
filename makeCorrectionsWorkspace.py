@@ -23,11 +23,11 @@ w = ROOT.RooWorkspace('w')
 
 
 ### KIT electron/muon tag and probe results
-loc = 'inputs/KIT/v2'
+loc = 'inputs/KIT/v3'
 
 histsToWrap = [
-    (loc+'/ZmmTP_Data_Fits_ID_pt_eta_bins.root:ID_pt_eta_bins',                          'm_id_data'),
-    (loc+'/ZmmTP_DYJetsToLL_Fits_ID_pt_eta_bins.root:ID_pt_eta_bins',                    'm_id_mc'),
+    (loc+'/ZmmTP_Data_Fits_IDTrk_pt_eta_bins.root:IDTrk_pt_eta_bins',                    'm_id_data'),
+    (loc+'/ZmmTP_DYJetsToLL_Fits_IDTrk_pt_eta_bins.root:IDTrk_pt_eta_bins',              'm_id_mc'),
     (loc+'/ZmmTP_Data_Fits_Iso_pt_eta_bins.root:Iso_pt_eta_bins',                        'm_iso_data'),
     (loc+'/ZmmTP_DYJetsToLL_Fits_Iso_pt_eta_bins.root:Iso_pt_eta_bins',                  'm_iso_mc'),
     (loc+'/ZmmTP_Data_Fits_AIso1_pt_eta_bins.root:AIso1_pt_eta_bins',                    'm_aiso1_data'),
@@ -37,9 +37,11 @@ histsToWrap = [
     (loc+'/ZmmTP_Data_Fits_Trg_Iso_pt_eta_bins.root:Trg_Iso_pt_eta_bins',                'm_trg_data'),
     (loc+'/ZmmTP_Data_Fits_Trg_AIso1_pt_bins_inc_eta.root:Trg_AIso1_pt_bins_inc_eta',    'm_trg_aiso1_data'),
     (loc+'/ZmmTP_Data_Fits_Trg_AIso2_pt_bins_inc_eta.root:Trg_AIso2_pt_bins_inc_eta',    'm_trg_aiso2_data'),
-    (loc+'/ZmmTP_Data_Fits_Trg_Iso_pt_eta_bins.root:Trg_Iso_pt_eta_bins',                'm_trgOR_data'),
-    (loc+'/ZmmTP_Data_Fits_Trg_AIso1_pt_bins_inc_eta.root:Trg_AIso1_pt_bins_inc_eta',    'm_trgOR_aiso1_data'),
-    (loc+'/ZmmTP_Data_Fits_Trg_AIso2_pt_bins_inc_eta.root:Trg_AIso2_pt_bins_inc_eta',    'm_trgOR_aiso2_data')
+    (loc+'/ZmmTP_Data_Fits_TrgOR_Iso_pt_eta_bins.root:TrgOR_Iso_pt_eta_bins',              'm_trgOR_data'),
+    (loc+'/ZmmTP_Data_Fits_TrgOR_AIso1_pt_bins_inc_eta.root:TrgOR_AIso1_pt_bins_inc_eta',  'm_trgOR_aiso1_data'),
+    (loc+'/ZmmTP_Data_Fits_TrgOR_AIso2_pt_bins_inc_eta.root:TrgOR_AIso2_pt_bins_inc_eta',  'm_trgOR_aiso2_data'),
+    (loc+'/ZmmTP_Data_Fits_TrgMT_Iso_pt_eta_bins.root:TrgMT_Iso_pt_eta_bins',            'm_trgMT_data'),
+    (loc+'/ZmmTP_Data_Fits_TrgMTL1_Iso_pt_eta_bins.root:TrgMTL1_Iso_pt_eta_bins',             'm_trgMTL1_data')
 ]
 
 for task in histsToWrap:
@@ -62,6 +64,7 @@ for t in ['id', 'iso', 'aiso1', 'aiso2', 'iso_binned']:
 for t in ['data', 'mc', 'ratio']:
     w.factory('expr::m_idiso_%s("@0*@1", m_id_%s, m_iso_%s)' % (t, t, t))
 
+loc = 'inputs/KIT/v2'
 
 histsToWrap = [
     (loc+'/ZeeTP_Data_Fits_ID_pt_eta_bins.root:ID_pt_eta_bins',                          'e_id_data'),
@@ -117,6 +120,8 @@ desyHistsToWrap = [
     (loc+'/Muon/Run2016BCD/Muon_IdIso0p20_eff.root',            'Data', 'm_idiso0p20_desy_data'),
     (loc+'/Muon/Run2016BCD/Muon_IsoMu22_eff.root',              'Data', 'm_trgIsoMu22_desy_data'),
     (loc+'/Muon/Run2016BCD/Muon_IsoMu22_OR_TkIsoMu22_eff.root', 'Data', 'm_trgIsoMu22orTkIsoMu22_desy_data'),
+    (loc+'/Muon/Run2016BCD/Muon_Mu8leg_eff.root',               'Data', 'm_trgMu8leg_desy_data'),
+    (loc+'/Muon/Run2016BCD/Muon_Mu23leg_eff.root',              'Data', 'm_trgMu23leg_desy_data')
 ]
 
 for task in desyHistsToWrap:
@@ -130,7 +135,9 @@ desyHistsToWrap = [
     (loc+'/Electron/Run2016BCD/Electron_IdIso0p10_eff.root',          'Data', 'e_idiso0p10_desy_data'),
     (loc+'/Electron/Run2016BCD/Electron_IdIso0p15_eff.root',          'MC',   'e_idiso0p15_desy_mc'),
     (loc+'/Electron/Run2016BCD/Electron_IdIso0p15_eff.root',          'Data', 'e_idiso0p15_desy_data'),
-    (loc+'/Electron/Run2016BCD/Electron_Ele25eta2p1WPTight_eff.root', 'Data', 'e_trgEle25eta2p1WPTight_desy_data')
+    (loc+'/Electron/Run2016BCD/Electron_Ele25eta2p1WPTight_eff.root', 'Data', 'e_trgEle25eta2p1WPTight_desy_data'),
+    (loc+'/Electron/Run2016BCD/Electron_Ele12leg_eff.root',           'Data', 'e_trgEle12leg_desy_data'),
+    (loc+'/Electron/Run2016BCD/Electron_Ele23leg_eff.root',           'Data', 'e_trgEle23leg_desy_data')
 ]
 
 for task in desyHistsToWrap:

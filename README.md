@@ -1,7 +1,13 @@
 # Correction factors
 
+<<<<<<< HEAD
 **UPDATES**:
- - 10/09, htt_scalefactors_v4.root: added tau ID scale factors binned in decay mode - for use in the MSSM HTT analysis. See details [below](#taus).
+ 
+ - 16/09, htt_scalefactors_v4.root
+   * Fixed bug in `m_trgOR_data` and `m_trgOR_binned_data` - these were inadvertently giving the efficiencies of the IsoMu22 trigger, not the OR with the IsoTkMu22 trigger.
+   * The muon ID efficiencies are now measured using the generalTracks collection as probes, to be in-line with what is done by the MuonPOG. However the efficiencies for pT < 20 GeV are still made with the tracker muons as probes, as the purity in the fail region is not high enough to use the tracks. These low pT scale factors may therefore be updated in the future.
+   * Added muon trigger efficiencies for the `HLT_IsoMu19_eta2p1_LooseIsoPFTau20` and `HLT_IsoMu19_eta2p1_LooseIsoPFTau20_SingleL1` cross triggers. For the former, another object in the event is required to have fired the tau part of the L1 seed as part of the denominator selection.
+   * Added trigger efficiencies for the e-mu cross triggers measured by the DESY group.
 
 ## Producing the workspace
 Clone this repository and initialise the other repositories which are handled as git submodules:
@@ -28,9 +34,9 @@ Each name here corresponds to a RooFit function object in the workspace. See bel
 ### Muons
 
  - `m_id_data` and `m_id_mc`: *double Voigtian* signal pdf, *RooCMSShape* background pdf
-    * Probe denominator: tracker muons in `slimmedMuons` collection, `pt > 20` and `abs(eta) < 2.4`
+    * Probe denominator: Tracks unpacked from the PFCandidates, `pt > 20` and `abs(eta) < 2.4`. For `pt < 20` uses tracker muons.
     * Probe numerator: Passes medium Muon HIP-safe ID and `d_xy < 0.045` and `d_z < 0.2`
-    * pt x abs(eta) bins: [20., 25., 30., 40., 50., 60., 80., 100., 200., 1000.] x [0, 0.9, 1.2, 2.1, 2.4]
+    * pt x abs(eta) bins: [10., 15., 20., 25., 30., 40., 50., 60., 80., 100., 200., 1000.] x [0, 0.9, 1.2, 2.1, 2.4]
     * Data/MC ratio available as `m_id_ratio`
     * Workspace variables to set: `m_pt` and `m_eta`
 
@@ -47,6 +53,12 @@ Each name here corresponds to a RooFit function object in the workspace. See bel
     * Probe denominator: numerator of the Iso measurement above
     * Probe numerator: For `m_trg_data`: fires the `HLT_IsoMu22` path and matches the final HLT filter object within `DR < 0.5`. For `m_trgOR_data` use the OR of the `HLT_IsoMu22` and `HLT_IsoTkMu22` paths
     * pt x abs(eta) bins: [20., 21., 22., 23., 24., 25., 30., 40., 50., 60., 80., 100., 200., 1000.] x [0, 0.9, 1.2, 2.1, 2.4]
+    * Workspace variables to set: `m_pt` and `m_eta`
+
+ - `m_trgMT_data` and `m_trgMTL1_data`: *double Voigtian* signal pdf, *Exponential* background pdf
+    * Probe denominator: numerator of the Iso measurement above. For `m_trgMT_data` also require some other well separate object in the event fired the L1 tau part.
+    * Probe numerator: For both triggers require that the muon part fired by matching to the final muon filter HLT object within `DR < 0.5`.
+    * pt x abs(eta) bins: [17., 18., 19., 20., 21., 22., 25., 30., 40., 50., 60., 80., 100., 200., 1000.] x [0, 0.9, 1.2, 2.1]
     * Workspace variables to set: `m_pt` and `m_eta`
 
 Additional isolation and trigger efficiencies have been measured with isolation definitions in the numerator and denominator probe selections respectively: `I_rel = [0.15, 0.25]` and `I_rel = [0.25, 0.50]`. These are available via the following functions:
@@ -168,9 +180,13 @@ The [LeptonEfficiencies](https://github.com/CMS-HTT/LeptonEfficiencies) reposito
 | m_idiso0p20_desy_data             | m_pt,m_eta      | Muon/Run2016BCD/Muon_IdIso0p20_eff.root                  |
 | m_trgIsoMu22_desy_data            | m_pt,m_eta      | Muon/Run2016BCD/Muon_IsoMu22_eff.root                    |
 | m_trgIsoMu22orTkIsoMu22_desy_data | m_pt,m_eta      | Muon/Run2016BCD/Muon_IsoMu22_OR_TkIsoMu22_eff.root       |
+| m_trgMu8leg_desy_data             | m_pt,m_eta      | Muon/Run2016BCD/Muon_Mu8leg_eff.root                     |
+| m_trgMu23leg_desy_data            | m_pt,m_eta      | Muon/Run2016BCD/Muon_Mu23leg_eff.root                    |
 | e_idiso0p10_desy_[mc,data,ratio]  | e_pt,e_eta      | Electron/Run2016BCD/Electron_IdIso0p10_eff.root          |
 | e_idiso0p15_desy_[mc,data,ratio]  | e_pt,e_eta      | Electron/Run2016BCD/Electron_IdIso0p15_eff.root          |
 | e_trgEle25eta2p1WPTight_desy_data | e_pt,e_eta      | Electron/Run2016BCD/Electron_Ele25eta2p1WPTight_eff.root |
+| e_trgEle12leg_desy_data           | e_pt,e_eta      | Electron/Run2016BCD/Electron_Ele12leg_eff.root           |
+| e_trgEle23leg_desy_data           | e_pt,e_eta      | Electron/Run2016BCD/Electron_Ele23leg_eff.root           |
 
 ### Muon and EGamma POG tracking efficiency scale factors
 
