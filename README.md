@@ -16,7 +16,7 @@ Clone this repository and initialise the other repositories which are handled as
     cd CorrectionsWorkspace
     git submodule update --init
 
-The workspace is produced my running the following script:
+The workspace is produced by running the following script:
 
     python makeCorrectionsWorkspace.py
 
