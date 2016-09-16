@@ -121,6 +121,7 @@ The data and MC efficiencies calculated in the fits are currently stored in TH2D
 **C++:**
 ```cpp
 #include "RooWorkspace.h"
+#include "RooRealVar.h"
 
 TFile f("scalefactors_2016_v4.root");
 RooWorkspace *w = (RooWorkspace*)f.Get("w");
