@@ -1,6 +1,5 @@
 # Correction factors
 
-<<<<<<< HEAD
 **UPDATES**:
  
  - 16/09, htt_scalefactors_v4.root
