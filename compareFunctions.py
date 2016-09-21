@@ -7,7 +7,7 @@ ROOT.PyConfig.IgnoreCommandLineOptions = True
 ROOT.gROOT.SetBatch(ROOT.kTRUE)
 plot.ModTDRStyle()
 
-fin = ROOT.TFile('htt_scalefactors_v3.root')
+fin = ROOT.TFile('htt_scalefactors_v5.root')
 w = fin.Get('w')
 
 
@@ -75,6 +75,16 @@ Compare(w, 'compare_kit_desy_m_trg_data_eta_0p0', 'm_trg_data', 'm_trgIsoMu22_de
 Compare(w, 'compare_kit_desy_m_trg_data_eta_0p9', 'm_trg_data', 'm_trgIsoMu22_desy_data', bins=[1000, 0, 1000], var='m_pt', other_vars={'m_eta':0.9}, line_pos=23.)
 Compare(w, 'compare_kit_desy_m_trg_data_eta_1p2', 'm_trg_data', 'm_trgIsoMu22_desy_data', bins=[1000, 0, 1000], var='m_pt', other_vars={'m_eta':1.2}, line_pos=23.)
 Compare(w, 'compare_kit_desy_m_trg_data_eta_2p1', 'm_trg_data', 'm_trgIsoMu22_desy_data', bins=[1000, 0, 1000], var='m_pt', other_vars={'m_eta':2.1}, line_pos=23.)
+
+Compare(w, 'compare_kit_desy_m_trgOR_data_low_pt_eta_0p0', 'm_trgOR_data', 'm_trgIsoMu22orTkIsoMu22_desy_data', bins=[200, 0, 50], var='m_pt', other_vars={'m_eta':0.0}, line_pos=23.)
+Compare(w, 'compare_kit_desy_m_trgOR_data_low_pt_eta_0p9', 'm_trgOR_data', 'm_trgIsoMu22orTkIsoMu22_desy_data', bins=[200, 0, 50], var='m_pt', other_vars={'m_eta':0.9}, line_pos=23.)
+Compare(w, 'compare_kit_desy_m_trgOR_data_low_pt_eta_1p2', 'm_trgOR_data', 'm_trgIsoMu22orTkIsoMu22_desy_data', bins=[200, 0, 50], var='m_pt', other_vars={'m_eta':1.2}, line_pos=23.)
+Compare(w, 'compare_kit_desy_m_trgOR_data_low_pt_eta_2p1', 'm_trgOR_data', 'm_trgIsoMu22orTkIsoMu22_desy_data', bins=[200, 0, 50], var='m_pt', other_vars={'m_eta':2.1}, line_pos=23.)
+Compare(w, 'compare_kit_desy_m_trgOR_data_eta_0p0', 'm_trgOR_data', 'm_trgIsoMu22orTkIsoMu22_desy_data', bins=[1000, 0, 1000], var='m_pt', other_vars={'m_eta':0.0}, line_pos=23.)
+Compare(w, 'compare_kit_desy_m_trgOR_data_eta_0p9', 'm_trgOR_data', 'm_trgIsoMu22orTkIsoMu22_desy_data', bins=[1000, 0, 1000], var='m_pt', other_vars={'m_eta':0.9}, line_pos=23.)
+Compare(w, 'compare_kit_desy_m_trgOR_data_eta_1p2', 'm_trgOR_data', 'm_trgIsoMu22orTkIsoMu22_desy_data', bins=[1000, 0, 1000], var='m_pt', other_vars={'m_eta':1.2}, line_pos=23.)
+Compare(w, 'compare_kit_desy_m_trgOR_data_eta_2p1', 'm_trgOR_data', 'm_trgIsoMu22orTkIsoMu22_desy_data', bins=[1000, 0, 1000], var='m_pt', other_vars={'m_eta':2.1}, line_pos=23.)
+
 
 Compare(w, 'compare_kit_desy_m_idiso_ratio_eta_0p0', 'm_idiso_ratio', 'm_idiso0p15_desy_ratio', bins=[200, 0, 200], var='m_pt', other_vars={'m_eta':0.0}, line_pos=23.)
 Compare(w, 'compare_kit_desy_m_idiso_ratio_eta_0p9', 'm_idiso_ratio', 'm_idiso0p15_desy_ratio', bins=[200, 0, 200], var='m_pt', other_vars={'m_eta':0.9}, line_pos=23.)

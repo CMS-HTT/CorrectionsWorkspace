@@ -1,8 +1,9 @@
 # Correction factors
 
 **UPDATES**:
- 
- - 16/09, htt_scalefactors_v4.root
+ - 21/09, htt_scalefactors_v5.root
+   * Updated electron and muon trigger functions from DESY to use the fine-binned variants that are now aligned with the offline pT cuts used in the MSSM analysis.
+ - 16/09, htt_scalefactors_v5.root
    * Fixed bug in `m_trgOR_data` and `m_trgOR_binned_data` - these were inadvertently giving the efficiencies of the IsoMu22 trigger, not the OR with the IsoTkMu22 trigger.
    * The muon ID efficiencies are now measured using the generalTracks collection as probes, to be in-line with what is done by the MuonPOG. However the efficiencies for pT < 20 GeV are still made with the tracker muons as probes, as the purity in the fail region is not high enough to use the tracks. These low pT scale factors may therefore be updated in the future.
    * Added muon trigger efficiencies for the `HLT_IsoMu19_eta2p1_LooseIsoPFTau20` and `HLT_IsoMu19_eta2p1_LooseIsoPFTau20_SingleL1` cross triggers. For the former, another object in the event is required to have fired the tau part of the L1 seed as part of the denominator selection.
@@ -22,7 +23,7 @@ The workspace is produced by running the following script:
 
 The contents of the output can be inspected with:
 
-    root -l htt_scalefactors_v4.root
+    root -l htt_scalefactors_v5.root
     w->Print()
     # See more detail on the evaluation of a particular object:
     w->function("m_id_ratio")->Print("tree")
@@ -123,7 +124,7 @@ The data and MC efficiencies calculated in the fits are currently stored in TH2D
 #include "RooWorkspace.h"
 #include "RooRealVar.h"
 
-TFile f("scalefactors_2016_v4.root");
+TFile f("scalefactors_2016_v5.root");
 RooWorkspace *w = (RooWorkspace*)f.Get("w");
 f.Close();
 
@@ -148,7 +149,7 @@ double muon_trg_eff = m_trg_data_func->eval(args.data());
 import ROOT
 from array import array
 
-f = ROOT.TFile("scalefactors_2016_v4.root")
+f = ROOT.TFile("scalefactors_2016_v5.root")
 w = f.Get("w")
 f.Close()
 

@@ -118,8 +118,8 @@ desyHistsToWrap = [
     (loc+'/Muon/Run2016BCD/Muon_IdIso0p15_eff.root',            'Data', 'm_idiso0p15_desy_data'),
     (loc+'/Muon/Run2016BCD/Muon_IdIso0p20_eff.root',            'MC',   'm_idiso0p20_desy_mc'),
     (loc+'/Muon/Run2016BCD/Muon_IdIso0p20_eff.root',            'Data', 'm_idiso0p20_desy_data'),
-    (loc+'/Muon/Run2016BCD/Muon_IsoMu22_eff.root',              'Data', 'm_trgIsoMu22_desy_data'),
-    (loc+'/Muon/Run2016BCD/Muon_IsoMu22_OR_TkIsoMu22_eff.root', 'Data', 'm_trgIsoMu22orTkIsoMu22_desy_data'),
+    (loc+'/Muon/Run2016BCD/Muon_IsoMu22_eff_fineBinning.root',              'Data', 'm_trgIsoMu22_desy_data'),
+    (loc+'/Muon/Run2016BCD/Muon_IsoMu22_OR_TkIsoMu22_eff_fineBinning.root', 'Data', 'm_trgIsoMu22orTkIsoMu22_desy_data'),
     (loc+'/Muon/Run2016BCD/Muon_Mu8leg_eff.root',               'Data', 'm_trgMu8leg_desy_data'),
     (loc+'/Muon/Run2016BCD/Muon_Mu23leg_eff.root',              'Data', 'm_trgMu23leg_desy_data')
 ]
@@ -135,7 +135,7 @@ desyHistsToWrap = [
     (loc+'/Electron/Run2016BCD/Electron_IdIso0p10_eff.root',          'Data', 'e_idiso0p10_desy_data'),
     (loc+'/Electron/Run2016BCD/Electron_IdIso0p15_eff.root',          'MC',   'e_idiso0p15_desy_mc'),
     (loc+'/Electron/Run2016BCD/Electron_IdIso0p15_eff.root',          'Data', 'e_idiso0p15_desy_data'),
-    (loc+'/Electron/Run2016BCD/Electron_Ele25eta2p1WPTight_eff.root', 'Data', 'e_trgEle25eta2p1WPTight_desy_data'),
+    (loc+'/Electron/Run2016BCD/Electron_Ele25eta2p1WPTight_eff_fineBinning.root', 'Data', 'e_trgEle25eta2p1WPTight_desy_data'),
     (loc+'/Electron/Run2016BCD/Electron_Ele12leg_eff.root',           'Data', 'e_trgEle12leg_desy_data'),
     (loc+'/Electron/Run2016BCD/Electron_Ele23leg_eff.root',           'Data', 'e_trgEle23leg_desy_data')
 ]
@@ -194,5 +194,5 @@ wsptools.SafeWrapHist(w, ['z_gen_mass', 'z_gen_pt'],
 w.importClassCode('CrystalBallEfficiency')
 
 w.Print()
-w.writeToFile('htt_scalefactors_v4.root')
+w.writeToFile('htt_scalefactors_v5.root')
 w.Delete()
