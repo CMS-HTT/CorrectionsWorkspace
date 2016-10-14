@@ -180,13 +180,13 @@ The [LeptonEfficiencies](https://github.com/CMS-HTT/LeptonEfficiencies) reposito
 | m_idiso0p15_desy_[mc,data,ratio]  | m_pt,m_eta      | Muon/Run2016BCD/Muon_IdIso0p15_eff.root                  |
 | m_idiso0p20_desy_[mc,data,ratio]  | m_pt,m_eta      | Muon/Run2016BCD/Muon_IdIso0p20_eff.root                  |
 | m_idiso0p20_desy_data             | m_pt,m_eta      | Muon/Run2016BCD/Muon_IdIso0p20_eff.root                  |
-| m_trgIsoMu22_desy_data            | m_pt,m_eta      | Muon/Run2016BCD/Muon_IsoMu22_eff.root                    |
-| m_trgIsoMu22orTkIsoMu22_desy_data | m_pt,m_eta      | Muon/Run2016BCD/Muon_IsoMu22_OR_TkIsoMu22_eff.root       |
+| m_trgIsoMu22_desy_data            | m_pt,m_eta      | Muon/Run2016BCD/Muon_IsoMu22_eff_fineBinning.root                    |
+| m_trgIsoMu22orTkIsoMu22_desy_data | m_pt,m_eta      | Muon/Run2016BCD/Muon_IsoMu22_OR_TkIsoMu22_eff_fineBinning.root       |
 | m_trgMu8leg_desy_data             | m_pt,m_eta      | Muon/Run2016BCD/Muon_Mu8leg_eff.root                     |
 | m_trgMu23leg_desy_data            | m_pt,m_eta      | Muon/Run2016BCD/Muon_Mu23leg_eff.root                    |
 | e_idiso0p10_desy_[mc,data,ratio]  | e_pt,e_eta      | Electron/Run2016BCD/Electron_IdIso0p10_eff.root          |
 | e_idiso0p15_desy_[mc,data,ratio]  | e_pt,e_eta      | Electron/Run2016BCD/Electron_IdIso0p15_eff.root          |
-| e_trgEle25eta2p1WPTight_desy_data | e_pt,e_eta      | Electron/Run2016BCD/Electron_Ele25eta2p1WPTight_eff.root |
+| e_trgEle25eta2p1WPTight_desy_data | e_pt,e_eta      | Electron/Run2016BCD/Electron_Ele25eta2p1WPTight_eff_fineBinning.root |
 | e_trgEle12leg_desy_data           | e_pt,e_eta      | Electron/Run2016BCD/Electron_Ele12leg_eff.root           |
 | e_trgEle23leg_desy_data           | e_pt,e_eta      | Electron/Run2016BCD/Electron_Ele23leg_eff.root           |
 
