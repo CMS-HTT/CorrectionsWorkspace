@@ -22,6 +22,34 @@ def TGraphAsymmErrorsToTH1D(graph):
         hist.SetBinError(i, (graph.GetEYhigh()[i-1] + graph.GetEYlow()[i-1]) / 2.)
     return hist
 
+
+# Special version of the above function that infers the binning without using EXlow/high
+# Instead relies on the assumption that first bin starts at zero
+def TGraphAsymmErrorsToTH1DForTaus(graph):
+    nbins = graph.GetN()
+    bin_edges = []
+    bin_edges.append(0.)
+    for i in xrange(0, nbins):
+        bin_edges.append(graph.GetX()[i]+(graph.GetX()[i] - bin_edges[-1]))
+    print bin_edges
+    hist = ROOT.TH1D(graph.GetName(), graph.GetTitle(), nbins, array('d', bin_edges))
+    last_non_zero = 0.0
+    for i in xrange(1, nbins+1):
+        hist.SetBinContent(i, graph.GetY()[i-1])
+        hist.SetBinError(i, (graph.GetEYhigh()[i-1] + graph.GetEYlow()[i-1]) / 2.)
+        if graph.GetY()[i-1] != 0.:
+            last_non_zero = graph.GetY()[i-1]
+    print 'Before fix'
+    hist.Print('range')
+    for i in reversed(xrange(1, nbins+1)):
+        if hist.GetBinContent(i) == 0.:
+            hist.SetBinContent(i, last_non_zero)
+        else:
+            break
+    print 'After fix'
+    hist.Print('range')
+    return hist
+
 def SafeWrapHist(wsp, binvars, hist, name=None, bound=True):
     # Use the histogram name for this function unless a new name has
     # been specified
