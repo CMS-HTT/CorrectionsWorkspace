@@ -74,10 +74,10 @@ for obj in [
             'fake_endcap_VVTightIso'
            ]:
     wsptools.SafeWrapHist(w, ['t_pt'],
-                          wsptools.TGraphAsymmErrorsToTH1D(tau_mt_file.Get('data_%s' % obj)), name='t_%s_data' % obj)
+                          wsptools.TGraphAsymmErrorsToTH1D(tau_mt_file.Get('data_%s' % obj)), name='t_%s_mt_data' % obj)
     wsptools.SafeWrapHist(w, ['t_pt'],
-                          wsptools.TGraphAsymmErrorsToTH1D(tau_mt_file.Get('mc_%s' % obj)), name='t_%s_mc' % obj)
-    w.factory('expr::t_%s_ratio("@0/@1", t_%s_data, t_%s_mc)' % (obj, obj, obj))
+                          wsptools.TGraphAsymmErrorsToTH1D(tau_mt_file.Get('mc_%s' % obj)), name='t_%s_mt_mc' % obj)
+    w.factory('expr::t_%s_mt_ratio("@0/@1", t_%s_mt_data, t_%s_mt_mc)' % (obj, obj, obj))
 tau_mt_file.Close()
 
 
@@ -113,13 +113,13 @@ for obj in [
             'fake_endcap_VVTightIso'
            ]:
     wsptools.SafeWrapHist(w, ['t_pt'],
-                          wsptools.TGraphAsymmErrorsToTH1D(tau_et_file.Get('data_%s_dm0' % obj)), name='t_%s_dm0_data' % obj)
+                          wsptools.TGraphAsymmErrorsToTH1D(tau_et_file.Get('data_%s_dm0' % obj)), name='t_%s_dm0_et_data' % obj)
     wsptools.SafeWrapHist(w, ['t_pt'],
-                          wsptools.TGraphAsymmErrorsToTH1D(tau_et_file.Get('data_%s_dm1' % obj)), name='t_%s_dm1_data' % obj)
+                          wsptools.TGraphAsymmErrorsToTH1D(tau_et_file.Get('data_%s_dm1' % obj)), name='t_%s_dm1_et_data' % obj)
     wsptools.SafeWrapHist(w, ['t_pt'],
-                          wsptools.TGraphAsymmErrorsToTH1D(tau_et_file.Get('data_%s_dm10' % obj)), name='t_%s_dm10_data' % obj)
+                          wsptools.TGraphAsymmErrorsToTH1D(tau_et_file.Get('data_%s_dm10' % obj)), name='t_%s_dm10_et_data' % obj)
     wsptools.SafeWrapHist(w, ['t_pt'],
-                          wsptools.TGraphAsymmErrorsToTH1D(tau_et_file.Get('mc_%s' % obj)), name='t_%s_mc' % obj)
+                          wsptools.TGraphAsymmErrorsToTH1D(tau_et_file.Get('mc_%s' % obj)), name='t_%s_et_mc' % obj)
 tau_et_file.Close()
 
 
