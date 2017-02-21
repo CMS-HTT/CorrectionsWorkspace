@@ -79,12 +79,12 @@ Each name here corresponds to a RooFit function object in the workspace. See bel
 Scale factors and efficiencies are defined as a function of some or all of: `t_pt`, `t_eta`, and `t_dm` (the integer decay mode of the tau). The tau-tau channel trigger turn-ons are parameterised by crystal ball functions. See the notes below on the technical implementation.
 For the e-tau and mu-tau channels the values are read from TGraphs, with linear interpolation used between points.
 
-|                                    Function name                                     | Input variables |                                    Notes                                     |
-|--------------------------------------------------------------------------------------|-----------------|------------------------------------------------------------------------------|
-| t_[genuine,fake]_[VLoose,Loose,Medium,Tight,VTight,VVTight]Iso_tt_[mc,data,ratio]    | t_pt,t_dm       | Tau-tau channel efficiencies. Inclusive in eta, binned in DM for data and MC |
-| t_[genuine,fake]_[No,VLoose,Loose,Medium,Tight,VTight,VVTight]Iso_mt_[mc,data,ratio] | t_pt,t_eta      | Mu-tau channel efficiencies. Inclusive in DM, binned in eta                  |
-| t_[genuine,fake]_[No,VLoose,Loose,Medium,Tight,VTight,VVTight]Iso_et_[data,ratio]    | t_pt,t_eta,t_dm | El-tau channel efficiencies for data. Binned in DM and eta.                  |
-| t_[genuine,fake]_[No,VLoose,Loose,Medium,Tight,VTight,VVTight]Iso_et_[mc]            | t_pt,t_eta      | El-tau channel efficiencies for MC. Inclusive in DM and binned in eta        |
+|                                     Function name                                      | Input variables |                                    Notes                                     |
+|----------------------------------------------------------------------------------------|-----------------|------------------------------------------------------------------------------|
+| `t_[genuine,fake]_[VLoose,Loose,Medium,Tight,VTight,VVTight]Iso_tt_[mc,data,ratio]`    | t_pt,t_dm       | Tau-tau channel efficiencies. Inclusive in eta, binned in DM for data and MC |
+| `t_[genuine,fake]_[No,VLoose,Loose,Medium,Tight,VTight,VVTight]Iso_mt_[mc,data,ratio]` | t_pt,t_eta      | Mu-tau channel efficiencies. Inclusive in DM, binned in eta                  |
+| `t_[genuine,fake]_[No,VLoose,Loose,Medium,Tight,VTight,VVTight]Iso_et_[data,ratio]`    | t_pt,t_eta,t_dm | El-tau channel efficiencies for data. Binned in DM and eta.                  |
+| `t_[genuine,fake]_[No,VLoose,Loose,Medium,Tight,VTight,VVTight]Iso_et_[mc]`            | t_pt,t_eta      | El-tau channel efficiencies for MC. Inclusive in DM and binned in eta        |
 
 
 
