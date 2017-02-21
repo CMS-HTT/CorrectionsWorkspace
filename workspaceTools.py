@@ -39,15 +39,15 @@ def TGraphAsymmErrorsToTH1DForTaus(graph):
         hist.SetBinError(i, (graph.GetEYhigh()[i-1] + graph.GetEYlow()[i-1]) / 2.)
         if graph.GetY()[i-1] != 0.:
             last_non_zero = graph.GetY()[i-1]
-    print 'Before fix'
-    hist.Print('range')
+    # print 'Before fix'
+    # hist.Print('range')
     for i in reversed(xrange(1, nbins+1)):
         if hist.GetBinContent(i) == 0.:
             hist.SetBinContent(i, last_non_zero)
         else:
             break
-    print 'After fix'
-    hist.Print('range')
+    # print 'After fix'
+    # hist.Print('range')
     return hist
 
 def SafeWrapHist(wsp, binvars, hist, name=None, bound=True):
