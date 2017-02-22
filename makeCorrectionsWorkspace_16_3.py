@@ -394,23 +394,27 @@ wsptools.MakeBinnedCategoryFuncMap(w, 't_dm', [-0.5, 0.5, 9.5, 10.5],
 
 
 ### Hadronic tau trigger efficiencies
-loc = 'inputs/triggerSF/di-tau'
-
-with open(loc+'/real_taus_cumulative.json') as jsonfile:
+with open('inputs/triggerSF-Moriond17/di-tau/fitresults_tt_moriond2017.json') as jsonfile:
     pars = json.load(jsonfile)
-    for wp in pars:
-        x = pars[wp]
-        w.factory('CrystalBallEfficiency::t_trg%s_data(t_pt[0],%g,%g,%g,%g,%g)' % (
-                wp, x['m_{0}'], x['sigma'], x['alpha'], x['n'], x['norm']
-            ))
+    for tautype in ['genuine', 'fake']:
+        for iso in ['VLooseIso','LooseIso','MediumIso','TightIso','VTightIso','VVTightIso']:
+            for dm in ['dm0', 'dm1', 'dm10']:
+                label = '%s_%s_%s' % (tautype, iso, dm)
+                x = pars['data_%s' % (label)]
+                w.factory('CrystalBallEfficiency::t_%s_tt_data(t_pt[0],%g,%g,%g,%g,%g)' % (
+                    label, x['m_{0}'], x['sigma'], x['alpha'], x['n'], x['norm']
+                ))
 
-with open(loc+'/same_sign_cumulative.json') as jsonfile:
-    pars = json.load(jsonfile)
-    for wp in pars:
-        x = pars[wp]
-        w.factory('CrystalBallEfficiency::t_trg%sSS_data(t_pt[0],%g,%g,%g,%g,%g)' % (
-                wp, x['m_{0}'], x['sigma'], x['alpha'], x['n'], x['norm']
-            ))
+                x = pars['mc_%s' % (label)]
+                w.factory('CrystalBallEfficiency::t_%s_tt_mc(t_pt[0],%g,%g,%g,%g,%g)' % (
+                    label, x['m_{0}'], x['sigma'], x['alpha'], x['n'], x['norm']
+                ))
+            label = '%s_%s' % (tautype, iso)
+            wsptools.MakeBinnedCategoryFuncMap(w, 't_dm', [-0.5, 0.5, 9.5, 10.5],
+                                               't_%s_tt_data' % label, ['t_%s_dm0_tt_data' % label, 't_%s_dm1_tt_data' % label, 't_%s_dm10_tt_data' % label])
+            wsptools.MakeBinnedCategoryFuncMap(w, 't_dm', [-0.5, 0.5, 9.5, 10.5],
+                                               't_%s_tt_mc' % label, ['t_%s_dm0_tt_mc' % label, 't_%s_dm1_tt_mc' % label, 't_%s_dm10_tt_mc' % label])
+            w.factory('expr::t_%s_tt_ratio("@0/@1", t_%s_tt_data, t_%s_tt_mc)' % (label, label, label))
 
 ### LO DYJetsToLL Z mass vs pT correction
 wsptools.SafeWrapHist(w, ['z_gen_mass', 'z_gen_pt'],
