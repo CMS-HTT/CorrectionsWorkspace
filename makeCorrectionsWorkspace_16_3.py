@@ -269,7 +269,7 @@ wsptools.SafeWrapHist(w, ['e_eta','e_pt'], electron_trk_eff_hist, name='e_trk_ra
 
 ### DESY electron/muon tag and probe results
 loc = 'inputs/LeptonEfficiencies'
-loc2 = '/nfs/dust/cms/user/bottav/CMSSW_8_0_12/src/DesyTauAnalyses/NTupleMaker/test/TP_2016/2016_fullDataset/finalFiles_forKITcomparison_0102'
+loc2 = 'inputs/DESYsyncSF'
 
 desyHistsToWrap = [
     (loc+'/Muon/Run2016BtoH/Muon_IdIso_IsoLt0p15_2016BtoH_eff.root',            'MC',   'm_idiso0p15_desy_mc'),
