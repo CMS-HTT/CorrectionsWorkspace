@@ -22,6 +22,106 @@ ROOT.gROOT.LoadMacro("CrystalBallEfficiency.cxx+")
 w = ROOT.RooWorkspace('w')
 
 
+### DESY electron/muon tag and probe results
+loc = 'inputs/LeptonEfficiencies'
+
+desyHistsToWrap = [
+    (loc+'/Muon/Run2016BtoH/Muon_IdIso_IsoLt0p15_2016BtoH_eff.root',            'MC',   'm_idiso0p15_desy_mc'),
+    (loc+'/Muon/Run2016BtoH/Muon_IdIso_IsoLt0p15_2016BtoH_eff.root',            'Data', 'm_idiso0p15_desy_data'),
+    (loc+'/Muon/Run2016BtoH/Muon_IdIso_IsoLt0p2_2016BtoH_eff.root',            'MC',   'm_idiso0p20_desy_mc'),
+    (loc+'/Muon/Run2016BtoH/Muon_IdIso_IsoLt0p2_2016BtoH_eff.root',            'Data', 'm_idiso0p20_desy_data'),
+    (loc+'/Muon/Run2016BtoH/Muon_IdIso_antiisolated_Iso0p15to0p3_eff_rb.root',            'MC',   'm_idiso_aiso0p15to0p3_desy_mc'),
+    (loc+'/Muon/Run2016BtoH/Muon_IdIso_antiisolated_Iso0p15to0p3_eff_rb.root',            'Data',   'm_idiso_aiso0p15to0p3_desy_data'),
+    (loc+'/Muon/Run2016BtoH/Muon_antiisolated_0p05to0p15_IdIso_eff.root',            'MC',   'm_idiso_aiso0p05to0p15_desy_mc'),
+    (loc+'/Muon/Run2016BtoH/Muon_antiisolated_0p05to0p15_IdIso_eff.root',            'Data',   'm_idiso_aiso0p05to0p15_desy_data'),
+    (loc+'/Muon/Run2016BtoH/Muon_antiisolated_0p15to0p25_IdIso_eff.root',            'MC',   'm_idiso_aiso0p15to0p25_desy_mc'),
+    (loc+'/Muon/Run2016BtoH/Muon_antiisolated_0p15to0p25_IdIso_eff.root',            'Data',   'm_idiso_aiso0p15to0p25_desy_data'),
+
+    (loc+'/Muon/Run2016BtoH/Muon_IsoMu24_2016BtoH_eff.root',              'MC', 'm_trgIsoMu24_desy_mc'),
+    (loc+'/Muon/Run2016BtoH/Muon_IsoMu24_2016BtoH_eff.root',              'Data', 'm_trgIsoMu24_desy_data'),
+
+    (loc+'/Muon/Run2016BtoH/Muon_IsoMu24_OR_TkIsoMu24_2016BtoH_eff.root', 'MC', 'm_trgIsoMu24orTkIsoMu24_desy_mc'),
+    (loc+'/Muon/Run2016BtoH/Muon_IsoMu24_OR_TkIsoMu24_2016BtoH_eff.root', 'Data', 'm_trgIsoMu24orTkIsoMu24_desy_data'),
+    (loc+'/Muon/Run2016BtoH/Muon_antiisolated_0p05to0p15_IsoMu24ORTkIsoMu24_eff_rb.root', 'MC', 'm_trgIsoMu24orTkIsoMu24_aiso0p05to0p15_desy_mc'),
+    (loc+'/Muon/Run2016BtoH/Muon_antiisolated_0p05to0p15_IsoMu24ORTkIsoMu24_eff_rb.root', 'Data', 'm_trgIsoMu24orTkIsoMu24_aiso0p05to0p15_desy_data'),
+    (loc+'/Muon/Run2016BtoH/Muon_antiisolated_0p15to0p25_IsoMu24ORTkIsoMu24_eff_rb.root', 'MC', 'm_trgIsoMu24orTkIsoMu24_aiso0p15to0p25_desy_mc'),
+    (loc+'/Muon/Run2016BtoH/Muon_antiisolated_0p15to0p25_IsoMu24ORTkIsoMu24_eff_rb.root', 'Data', 'm_trgIsoMu24orTkIsoMu24_aiso0p15to0p25_desy_data'),
+
+    (loc+'/Muon/Run2016BtoH/Muon_Mu8leg_2016BtoH_eff.root',               'MC', 'm_trgMu8leg_desy_mc'),
+    (loc+'/Muon/Run2016BtoH/Muon_Mu8leg_2016BtoH_eff.root',               'Data', 'm_trgMu8leg_desy_data'),
+
+    (loc+'/Muon/Run2016BtoH/Muon_Mu23leg_2016BtoH_eff.root',              'MC', 'm_trgMu23leg_desy_mc'),
+    (loc+'/Muon/Run2016BtoH/Muon_Mu23leg_2016BtoH_eff.root',              'Data', 'm_trgMu23leg_desy_data'),
+
+    (loc+'/Muon/Run2016BtoH/Muon_Mu19leg_2016BtoH_eff.root',              'MC', 'm_trgMu19leg_eta2p1_desy_mc'),
+    (loc+'/Muon/Run2016BtoH/Muon_Mu19leg_2016BtoH_eff.root',              'Data', 'm_trgMu19leg_eta2p1_desy_data'),
+    (loc+'/Muon/Run2016BtoH/Muon_Mu19leg_eta2p1_antiisolated_Iso0p05to0p15_eff_rb.root',              'MC', 'm_trgMu19leg_eta2p1_aiso0p05to0p15_desy_mc'),
+    (loc+'/Muon/Run2016BtoH/Muon_Mu19leg_eta2p1_antiisolated_Iso0p05to0p15_eff_rb.root',              'Data', 'm_trgMu19leg_eta2p1_aiso0p05to0p15_desy_data'),
+    (loc+'/Muon/Run2016BtoH/Muon_Mu19leg_eta2p1_antiisolated_Iso0p15to0p25_eff_rb.root',              'MC', 'm_trgMu19leg_eta2p1_aiso0p15to0p25_desy_mc'),
+    (loc+'/Muon/Run2016BtoH/Muon_Mu19leg_eta2p1_antiisolated_Iso0p15to0p25_eff_rb.root',              'Data', 'm_trgMu19leg_eta2p1_aiso0p15to0p25_desy_data'),
+    (loc+'/Muon/Run2016BtoH/Muon_Mu19leg_eta2p1_antiisolated_Iso0p15to0p3_eff_rb.root',              'MC', 'm_trgMu19leg_eta2p1_aiso0p15to0p3_desy_mc'),
+    (loc+'/Muon/Run2016BtoH/Muon_Mu19leg_eta2p1_antiisolated_Iso0p15to0p3_eff_rb.root',              'Data', 'm_trgMu19leg_eta2p1_aiso0p15to0p3_desy_data'),
+
+    (loc+'/Muon/Run2016BtoH/Muon_Mu22OR_eta2p1_eff.root',              'MC', 'm_trgMu22OR_eta2p1_desy_mc'),
+    (loc+'/Muon/Run2016BtoH/Muon_Mu22OR_eta2p1_eff.root',              'Data', 'm_trgMu22OR_eta2p1_desy_data'),
+    (loc+'/Muon/Run2016BtoH/Muon_Mu22OR_eta2p1_antiisolated_Iso0p05to0p15_eff_rb.root',              'MC', 'm_trgMu22OR_eta2p1_aiso0p05to0p15_desy_mc'),
+    (loc+'/Muon/Run2016BtoH/Muon_Mu22OR_eta2p1_antiisolated_Iso0p05to0p15_eff_rb.root',              'Data', 'm_trgMu22OR_eta2p1_aiso0p05to0p15_desy_data'),
+    (loc+'/Muon/Run2016BtoH/Muon_Mu22OR_eta2p1_antiisolated_Iso0p15to0p25_eff_rb.root',              'MC', 'm_trgMu22OR_eta2p1_aiso0p15to0p25_desy_mc'),
+    (loc+'/Muon/Run2016BtoH/Muon_Mu22OR_eta2p1_antiisolated_Iso0p15to0p25_eff_rb.root',              'Data', 'm_trgMu22OR_eta2p1_aiso0p15to0p25_desy_data'),
+    (loc+'/Muon/Run2016BtoH/Muon_Mu22OR_eta2p1_antiisolated_Iso0p15to0p3_eff_rb.root',              'MC', 'm_trgMu22OR_eta2p1_aiso0p15to0p3_desy_mc'),
+    (loc+'/Muon/Run2016BtoH/Muon_Mu22OR_eta2p1_antiisolated_Iso0p15to0p3_eff_rb.root',              'Data', 'm_trgMu22OR_eta2p1_aiso0p15to0p3_desy_data'),
+]
+
+for task in desyHistsToWrap:
+    wsptools.SafeWrapHist(w, ['m_pt', 'expr::m_abs_eta("TMath::Abs(@0)",m_eta[0])'],
+                          wsptools.ProcessDESYLeptonSFs(task[0], task[1], task[2]), name=task[2])
+for t in ['idiso0p15_desy', 'idiso0p20_desy', 'idiso_aiso0p15to0p3_desy', 'idiso_aiso0p05to0p15_desy', 'idiso_aiso0p15to0p25_desy', 'trgIsoMu24_desy', 'trgIsoMu24orTkIsoMu24_desy',    'trgIsoMu24orTkIsoMu24_aiso0p05to0p15_desy', 'trgIsoMu24orTkIsoMu24_aiso0p15to0p25_desy', 'trgMu8leg_desy', 'trgMu23leg_desy', 'trgMu19leg_eta2p1_desy', 'trgMu19leg_eta2p1_aiso0p05to0p15_desy', 'trgMu19leg_eta2p1_aiso0p15to0p25_desy', 'trgMu19leg_eta2p1_aiso0p15to0p3_desy', 'trgMu22OR_eta2p1_desy', 'trgMu22OR_eta2p1_aiso0p05to0p15_desy', 'trgMu22OR_eta2p1_aiso0p15to0p25_desy', 'trgMu22OR_eta2p1_aiso0p15to0p3_desy']:
+    w.factory('expr::m_%s_ratio("@0/@1", m_%s_data, m_%s_mc)' % (t, t, t))
+
+desyHistsToWrap = [
+    (loc+'/Electron/Run2016BtoH/Electron_IdIso_IsoLt0p1_eff.root',          'MC',   'e_idiso0p1_desy_mc'),
+    (loc+'/Electron/Run2016BtoH/Electron_IdIso_IsoLt0p1_eff.root',          'Data', 'e_idiso0p1_desy_data'),
+    (loc+'/Electron/Run2016BtoH/Electron_IdIso_IsoLt0p15_eff.root',          'MC',   'e_idiso0p15_desy_mc'),
+    (loc+'/Electron/Run2016BtoH/Electron_IdIso_IsoLt0p15_eff.root',          'Data', 'e_idiso0p15_desy_data'),
+    (loc+'/Electron/Run2016BtoH/Electron_antiisolated_0p05to0p15_IdIso_eff.root',          'MC',   'e_idiso_aiso0p05to0p15_desy_mc'),
+    (loc+'/Electron/Run2016BtoH/Electron_antiisolated_0p05to0p15_IdIso_eff.root',          'Data', 'e_idiso_aiso0p05to0p15_desy_data'),
+    (loc+'/Electron/Run2016BtoH/Electron_antiisolated_0p10to0p20_IdIso_eff.root',          'MC',   'e_idiso_aiso0p1to0p2_desy_mc'),
+    (loc+'/Electron/Run2016BtoH/Electron_antiisolated_0p10to0p20_IdIso_eff.root',          'Data', 'e_idiso_aiso0p1to0p2_desy_data'),
+    (loc+'/Electron/Run2016BtoH/Electron_IdIso_antiisolated_Iso0p1to0p3_eff.root',          'MC',   'e_idiso_aiso0p1to0p3_desy_mc'),
+    (loc+'/Electron/Run2016BtoH/Electron_IdIso_antiisolated_Iso0p1to0p3_eff.root',          'Data', 'e_idiso_aiso0p1to0p3_desy_data'),
+
+    (loc+'/Electron/Run2016BtoH/Electron_Ele24_eff.root',          'MC',   'e_trgEle24_desy_mc'),
+    (loc+'/Electron/Run2016BtoH/Electron_Ele24_eff.root',          'Data', 'e_trgEle24_desy_data'),
+    (loc+'/Electron/Run2016BtoH/Electron_Ele24_antiisolated_Iso0p05to0p15_eff_rb.root',          'MC',   'e_trgEle24_aiso0p05to0p15_desy_mc'),
+    (loc+'/Electron/Run2016BtoH/Electron_Ele24_antiisolated_Iso0p05to0p15_eff_rb.root',          'Data', 'e_trgEle24_aiso0p05to0p15_desy_data'),
+    (loc+'/Electron/Run2016BtoH/Electron_Ele24_antiisolated_Iso0p1to0p2_eff_rb.root',          'MC',   'e_trgEle24_aiso0p1to0p2_desy_mc'),
+    (loc+'/Electron/Run2016BtoH/Electron_Ele24_antiisolated_Iso0p1to0p2_eff_rb.root',          'Data', 'e_trgEle24_aiso0p1to0p2_desy_data'),
+    (loc+'/Electron/Run2016BtoH/Electron_Ele24_antiisolated_Iso0p1to0p3_eff_rb.root',          'MC',   'e_trgEle24_aiso0p1to0p3_desy_mc'),
+    (loc+'/Electron/Run2016BtoH/Electron_Ele24_antiisolated_Iso0p1to0p3_eff_rb.root',          'Data', 'e_trgEle24_aiso0p1to0p3_desy_data'),
+
+    (loc+'/Electron/Run2016BtoH/Electron_Ele25WPTight_eff.root',          'MC',   'e_trgEle25eta2p1WPTight_desy_mc'),
+    (loc+'/Electron/Run2016BtoH/Electron_Ele25WPTight_eff.root',          'Data', 'e_trgEle25eta2p1WPTight_desy_data'),
+    (loc+'/Electron/Run2016BtoH/Electron_Ele25WPTight_antiisolated_Iso0p05to0p15_eff_rb.root',          'MC',   'e_trgEle25eta2p1WPTight_aiso0p05to0p15_desy_mc'),
+    (loc+'/Electron/Run2016BtoH/Electron_Ele25WPTight_antiisolated_Iso0p05to0p15_eff_rb.root',          'Data', 'e_trgEle25eta2p1WPTight_aiso0p05to0p15_desy_data'),
+    (loc+'/Electron/Run2016BtoH/Electron_Ele25WPTight_antiisolated_Iso0p1to0p2_eff_rb.root',          'MC',   'e_trgEle25eta2p1WPTight_aiso0p1to0p2_desy_mc'),
+    (loc+'/Electron/Run2016BtoH/Electron_Ele25WPTight_antiisolated_Iso0p1to0p2_eff_rb.root',          'Data', 'e_trgEle25eta2p1WPTight_aiso0p1to0p2_desy_data'),
+    (loc+'/Electron/Run2016BtoH/Electron_Ele25WPTight_antiisolated_Iso0p1to0p3_eff_rb.root',          'MC',   'e_trgEle25eta2p1WPTight_aiso0p1to0p3_desy_mc'),
+    (loc+'/Electron/Run2016BtoH/Electron_Ele25WPTight_antiisolated_Iso0p1to0p3_eff_rb.root',          'Data', 'e_trgEle25eta2p1WPTight_aiso0p1to0p3_desy_data'),
+
+    (loc+'/Electron/Run2016BtoH/Electron_Ele12leg_eff.root',           'MC', 'e_trgEle12leg_desy_mc'),
+    (loc+'/Electron/Run2016BtoH/Electron_Ele12leg_eff.root',           'Data', 'e_trgEle12leg_desy_data'),
+    (loc+'/Electron/Run2016BtoH/Electron_Ele23leg_eff.root',           'MC', 'e_trgEle23leg_desy_mc'),
+    (loc+'/Electron/Run2016BtoH/Electron_Ele23leg_eff.root',           'Data', 'e_trgEle23leg_desy_data')
+]
+
+for task in desyHistsToWrap:
+    wsptools.SafeWrapHist(w, ['e_pt', 'expr::e_abs_eta("TMath::Abs(@0)",e_eta[0])'],
+                          wsptools.ProcessDESYLeptonSFs(task[0], task[1], task[2]), name=task[2])
+
+for t in ['idiso0p10_KITbins_desy', 'idiso0p1_desy', 'idiso0p15_desy', 'idiso_aiso0p05to0p15_desy', 'idiso_aiso0p1to0p2_desy', 'idiso_aiso0p1to0p3_desy', 'trgEle24_desy', 'trgEle24_aiso0p05to0p15_desy', 'trgEle24_aiso0p1to0p2_desy', 'trgEle24_aiso0p1to0p3_desy', 'trgEle25eta2p1WPTight_desy', 'trgEle25eta2p1WPTight_aiso0p05to0p15_desy', 'trgEle25eta2p1WPTight_aiso0p1to0p2_desy', 'trgEle25eta2p1WPTight_aiso0p1to0p3_desy', 'trgEle25eta2p1WPTight_KITbins_desy', 'trgEle12leg_desy', 'trgEle23leg_desy']:
+    w.factory('expr::e_%s_ratio("@0/@1", e_%s_data, e_%s_mc)' % (t, t, t))
+
+
 ### Hadronic tau trigger efficiencies
 
 with open('inputs/triggerSF-Moriond17/di-tau/fitresults_tt_moriond2017.json') as jsonfile:
