@@ -70,7 +70,12 @@ for tautype in ['genuine', 'fake']:
             w.function('t_%s_mt_mc' % label).setInterpolationOrder(interpOrder)
 
             w.factory('expr::t_%s_mt_ratio("@0/@1", t_%s_mt_data, t_%s_mt_mc)' % (label, label, label))
-        fn = w.factory('expr::t_%s_%s_mt_ratio("TMath::Abs(@0) < 1.5 ? @1 : @2", t_eta[0], t_%s_barrel_%s_mt_ratio, t_%s_endcap_%s_mt_ratio)' %
+
+        w.factory('expr::t_%s_%s_mt_ratio("TMath::Abs(@0) < 1.5 ? @1 : @2", t_eta[0], t_%s_barrel_%s_mt_ratio, t_%s_endcap_%s_mt_ratio)' %
+            (tautype, iso, tautype, iso, tautype, iso))
+        w.factory('expr::t_%s_%s_mt_data("TMath::Abs(@0) < 1.5 ? @1 : @2", t_eta[0], t_%s_barrel_%s_mt_data, t_%s_endcap_%s_mt_data)' %
+            (tautype, iso, tautype, iso, tautype, iso))
+        w.factory('expr::t_%s_%s_mt_mc("TMath::Abs(@0) < 1.5 ? @1 : @2", t_eta[0], t_%s_barrel_%s_mt_mc, t_%s_endcap_%s_mt_mc)' %
             (tautype, iso, tautype, iso, tautype, iso))
 
 tau_mt_file.Close()
