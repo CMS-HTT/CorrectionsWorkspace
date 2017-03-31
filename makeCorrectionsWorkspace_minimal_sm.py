@@ -149,6 +149,36 @@ with open('inputs/triggerSF-Moriond17/di-tau/fitresults_tt_moriond2017.json') as
 
 interpOrder = 1
 
+
+tau_tt_file = ROOT.TFile('inputs/tauleg_of_di_tau_real_taus_skim_v2.root')
+tau_tt_file_mc = ROOT.TFile('inputs/tauleg_of_di_tau_real_taus_skim_mc_v2.root')
+
+prefix = {
+    'genuine': 'lowmt_zmass_sub',
+    'fake': 'highmt_os'
+}
+
+for tautype in ['genuine', 'fake']:
+    for iso in ['TightIso']:
+        for dm in ['dm0', 'dm1', 'dm10']:
+            label = 'binned_%s_%s_%s' % (tautype, iso, dm)
+            wsptools.SafeWrapHist(w, ['t_pt'], wsptools.TGraphAsymmErrorsToTH1DForTaus(
+                tau_tt_file.Get('%s_%s_%s_HLT_MediumIso35_L1iso30/tau_pt' % (prefix[tautype], iso, dm))), name='t_%s_tt_data' % label)
+
+            wsptools.SafeWrapHist(w, ['t_pt'], wsptools.TGraphAsymmErrorsToTH1DForTaus(
+                tau_tt_file_mc.Get('%s_%s_%s_HLT_MediumIso35_L1iso30/tau_pt' % (prefix[tautype], iso, dm))), name='t_%s_tt_mc' % label)
+
+            w.function('t_%s_tt_data' % label).setInterpolationOrder(interpOrder)
+            w.function('t_%s_tt_mc' % label).setInterpolationOrder(interpOrder)
+
+
+        label = 'binned_%s_%s' % (tautype, iso)
+        wsptools.MakeBinnedCategoryFuncMap(w, 't_dm', [-0.5, 0.5, 9.5, 10.5],
+                                           't_%s_tt_data' % label, ['t_%s_dm0_tt_data' % label, 't_%s_dm1_tt_data' % label, 't_%s_dm10_tt_data' % label])
+        wsptools.MakeBinnedCategoryFuncMap(w, 't_dm', [-0.5, 0.5, 9.5, 10.5],
+                                           't_%s_tt_mc' % label, ['t_%s_dm0_tt_mc' % label, 't_%s_dm1_tt_mc' % label, 't_%s_dm10_tt_mc' % label])
+        w.factory('expr::t_%s_tt_ratio("@0/@1", t_%s_tt_data, t_%s_tt_mc)' % (label, label, label))
+
 tau_mt_file = ROOT.TFile('inputs/triggerSF-Moriond17/mu-tau/trigger_sf_mt.root')
 for tautype in ['genuine', 'fake']:
     for iso in ['NoIso',
@@ -229,11 +259,11 @@ w.importClassCode('CrystalBallEfficiency')
 w.Print()
 
 
-w.writeToFile('htt_scalefactors_sm_moriond_v1.root')
+w.writeToFile('htt_scalefactors_sm_moriond_v2.root')
 w.Delete()
 
 
-fin = ROOT.TFile('htt_scalefactors_sm_moriond_v1.root')
+fin = ROOT.TFile('htt_scalefactors_sm_moriond_v2.root')
 w = fin.Get('w')
 
 taus = [
