@@ -142,8 +142,19 @@ def ProcessDESYLeptonSFs(filename, postfix, name):
         pt_bins.update(gr_bins)
         graphs.append(graph)
 
-        eta_bins.add(etaBinsH.GetXaxis().GetBinLowEdge(i))
-        eta_bins.add(etaBinsH.GetXaxis().GetBinUpEdge(i))
+        # These edges does not reflect the Binning!
+        #eta_bins.add(etaBinsH.GetXaxis().GetBinLowEdge(i))
+        #eta_bins.add(etaBinsH.GetXaxis().GetBinUpEdge(i))
+
+        # Perform some ugly string matching and replacement to get the right eta binning
+        labelBins = label.replace("Eta","")
+        if "Lt" in labelBins:
+            eta_bins.add(0.0)
+            eta_bins.add(float(labelBins.replace("Lt","").replace("p",".")))
+        else:
+            labelBins = labelBins.split("to")
+            for b in labelBins:
+                eta_bins.add(float(b.replace("p",".")))
     result = ROOT.TH2D(name, name,
                        len(pt_bins)-1, array('d', sorted(pt_bins)),
                        len(eta_bins)-1, array('d', sorted(eta_bins)))
