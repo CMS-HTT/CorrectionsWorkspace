@@ -125,14 +125,12 @@ def MakeBinnedCategoryFuncMap(wsp, name, bins, funcName, funcs):
 
 def ProcessDESYLeptonSFs(filename, postfix, name):
     f = ROOT.TFile(filename)
-    etaBinsH = f.Get('etaBinsH')
     eta_bins = set()
     pt_bins = set()
     graphs = []
-    for i in xrange(1, etaBinsH.GetNbinsX()+1):
-        label = etaBinsH.GetXaxis().GetBinLabel(i)
-
-        graph = f.Get('ZMass%s_%s' % (label, postfix))
+    graph_keys = [k for k in f.GetListOfKeys() if "ZMass" in k.GetName() and postfix in k.GetName()]
+    for gk in graph_keys:
+        graph = f.Get(gk.GetName())
         gr_bins = set()
         for j in xrange(0, graph.GetN()):
             gr_bins.add(graph.GetX()[j]-graph.GetEXlow()[j])
@@ -142,15 +140,14 @@ def ProcessDESYLeptonSFs(filename, postfix, name):
         pt_bins.update(gr_bins)
         graphs.append(graph)
 
-        # These edges does not reflect the Binning!
-        #eta_bins.add(etaBinsH.GetXaxis().GetBinLowEdge(i))
-        #eta_bins.add(etaBinsH.GetXaxis().GetBinUpEdge(i))
-
         # Perform some ugly string matching and replacement to get the right eta binning
-        labelBins = label.replace("Eta","")
+        labelBins = gk.GetName().replace("ZMassEta","").replace("_"+postfix,"")
         if "Lt" in labelBins:
             eta_bins.add(0.0)
             eta_bins.add(float(labelBins.replace("Lt","").replace("p",".")))
+        elif "Gt" in labelBins:
+            eta_bins.add(2.5)
+            eta_bins.add(float(labelBins.replace("Gt","").replace("p",".")))
         else:
             labelBins = labelBins.split("to")
             for b in labelBins:
